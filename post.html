@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Read post on OLON Sentiment TV">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co; img-src 'self' data: https:; frame-src https://www.googletagmanager.com;">
+  <meta http-equiv="Cross-Origin-Embedder-Policy" content="credentialless">
+  <meta http-equiv="Cross-Origin-Resource-Policy" content="cross-origin">
+  <title>Post - OLON Sentiment TV</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/aura.css">
+  <link rel="stylesheet" href="/css/components.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    .post-header {
+      text-align: center;
+      padding: var(--space-12) 0 var(--space-8);
+    }
+
+    .post-featured-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-6);
+    }
+
+    .post-body {
+      font-size: var(--font-size-lg);
+      line-height: var(--line-height-relaxed);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .post-body p {
+      margin-bottom: var(--space-5);
+    }
+
+    .post-body h2 {
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+    }
+
+    .post-body h3 {
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="aura-background" id="aura-container">
+    <div class="aura-layer aura-layer-primary"></div>
+    <div class="aura-layer aura-layer-secondary"></div>
+    <div class="aura-layer aura-layer-tertiary"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="flex-between">
+        <a href="/" class="site-logo">
+          <span>OLON SENTIMENT TV</span>
+        </a>
+        <nav class="site-nav">
+          <a href="/">Home</a>
+          <a href="/#categories">Categories</a>
+          <a href="/#about">About</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="aura-content">
+
+    <article class="section">
+      <div class="container-narrow">
+
+        <div id="post-content">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>OLON Sentiment TV</h3>
+          <p>Explore content by emotion.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Categories</h3>
+          <div id="footer-categories"></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OLON Sentiment TV. Built with sentiment.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/aura.js"></script>
+  <script src="/js/header-logo.js"></script>
+  <script src="/js/categories.js"></script>
+  <script src="/js/posts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await window.olonDB.initSupabase();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug');
+
+      if (!slug) {
+        window.location.href = '/';
+        return;
+      }
+
+      const post = await window.olonDB.getPostBySlug(slug);
+
+      if (!post) {
+        document.getElementById('post-content').innerHTML =
+          '<p class="text-center">Post not found.</p>';
+        return;
+      }
+
+      document.title = `${post.title} - OLON Sentiment TV`;
+
+      const container = document.getElementById('post-content');
+
+      const categoryBadge = post.category
+        ? `<span class="badge badge-${post.category.slug}" style="font-size: var(--font-size-xs);">${post.category.name}</span>`
+        : '';
+
+      const featuredImage = post.featured_image
+        ? `<img src="${post.featured_image}" alt="${post.title}" class="post-featured-image">`
+        : '';
+
+      container.innerHTML = `
+        <div class="post-header">
+          ${categoryBadge}
+          <h1 style="margin-top: var(--space-3); margin-bottom: var(--space-4);">${post.title}</h1>
+          <div class="post-meta flex-center gap-3" style="justify-content: center;">
+            <span>${formatDate(post.created_at)}</span>
+            ${post.view_count > 0 ? `<span>${post.view_count} views</span>` : ''}
+          </div>
+        </div>
+
+        ${featuredImage}
+
+        <div class="post-body">
+          ${formatContent(post.content)}
+        </div>
+
+        <div style="margin-top: var(--space-8); text-align: center;">
+          <a href="/category.html?slug=${post.category?.slug || ''}" class="btn btn-${post.category?.slug || 'top'}">
+            View more in ${post.category?.name || 'this category'}
+          </a>
+        </div>
+      `;
+
+      if (post.category) {
+        initAura(post.category.slug);
+        window.olonAura.applyCategoryColors(post.category);
+        window.olonHeaderLogo.updateLogo(post.category.slug);
+      }
+
+      await loadFooterCategories();
+    });
+
+    function formatContent(content) {
+      return content
+        .split('\n\n')
+        .map(para => `<p>${para}</p>`)
+        .join('');
+    }
+  </script>
+
+</body>
+</html>

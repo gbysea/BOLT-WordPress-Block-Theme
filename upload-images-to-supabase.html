@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Images to Supabase Storage</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 { color: #333; margin-top: 0; }
+    .status {
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 5px;
+      background: #f0f0f0;
+    }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    .info { background: #d1ecf1; color: #0c5460; }
+    button {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px 10px 0;
+    }
+    button:hover { background: #555; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    input[type="file"] {
+      margin: 20px 0;
+      padding: 10px;
+      width: 100%;
+      border: 2px dashed #ccc;
+      border-radius: 5px;
+    }
+    .url-list {
+      margin-top: 20px;
+      font-family: monospace;
+      font-size: 12px;
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 5px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .url-item {
+      margin: 5px 0;
+      padding: 5px;
+      background: white;
+      border-left: 3px solid #4CAF50;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📤 Upload Category Icons to Supabase</h1>
+
+    <div class="status info">
+      <strong>Instructions:</strong><br>
+      1. Select your 12 PNG files (category icons)<br>
+      2. Click "Upload All Images"<br>
+      3. Copy the generated URLs<br>
+      4. Update your database with the "Update Database" button
+    </div>
+
+    <div id="status"></div>
+
+    <input type="file" id="fileInput" multiple accept="image/png" />
+
+    <div>
+      <button onclick="uploadImages()">📤 Upload All Images</button>
+      <button onclick="updateDatabase()" id="updateDbBtn" disabled>🗄️ Update Database</button>
+      <button onclick="testImages()" id="testBtn" disabled>🧪 Test Images</button>
+    </div>
+
+    <div id="urlList" class="url-list" style="display:none;"></div>
+  </div>
+
+  <script>
+    const supabase = window.supabase.createClient(
+      'https://irbflzzuamvvujebhter.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlyYmZsenp1YW12dnVqZWJodGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDAwOTYsImV4cCI6MjA3NjAxNjA5Nn0.MaKWPrMGIZYDC7r084VnkI4Gvji5cC0c8s4kgTqXHP0'
+    );
+
+    let uploadedUrls = {};
+
+    function showStatus(message, type = 'info') {
+      const status = document.getElementById('status');
+      status.className = `status ${type}`;
+      status.innerHTML = message;
+    }
+
+    async function uploadImages() {
+      const fileInput = document.getElementById('fileInput');
+      const files = fileInput.files;
+
+      if (files.length === 0) {
+        showStatus('❌ Please select at least one image file', 'error');
+        return;
+      }
+
+      showStatus(`⏳ Uploading ${files.length} files...`, 'info');
+      uploadedUrls = {};
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        try {
+          const { data, error } = await supabase.storage
+            .from('olon-images')
+            .upload(file.name, file, {
+              cacheControl: '3600',
+              upsert: true
+            });
+
+          if (error) throw error;
+
+          const { data: { publicUrl } } = supabase.storage
+            .from('olon-images')
+            .getPublicUrl(file.name);
+
+          uploadedUrls[file.name] = publicUrl;
+          successCount++;
+
+          console.log(`✅ Uploaded: ${file.name}`);
+        } catch (error) {
+          console.error(`❌ Failed: ${file.name}`, error);
+          errorCount++;
+        }
+      }
+
+      if (successCount > 0) {
+        showStatus(`✅ Successfully uploaded ${successCount} images!` +
+                   (errorCount > 0 ? ` (${errorCount} failed)` : ''), 'success');
+        displayUrls();
+        document.getElementById('updateDbBtn').disabled = false;
+        document.getElementById('testBtn').disabled = false;
+      } else {
+        showStatus(`❌ All uploads failed. Check console for details.`, 'error');
+      }
+    }
+
+    function displayUrls() {
+      const urlList = document.getElementById('urlList');
+      urlList.style.display = 'block';
+      urlList.innerHTML = '<strong>Uploaded Image URLs:</strong><br><br>';
+
+      Object.entries(uploadedUrls).forEach(([name, url]) => {
+        urlList.innerHTML += `<div class="url-item">${name}<br>${url}</div>`;
+      });
+    }
+
+    async function updateDatabase() {
+      showStatus('⏳ Updating database...', 'info');
+
+      const categories = {
+        'top': { up: 'top-UP-olon-120.png', hover: 'top-HOVER-olon-120.png' },
+        'up': { up: 'up-UP-olon-120.png', hover: 'up-HOVER-olon-120.png' },
+        'charm': { up: 'charm-UP-olon-120.png', hover: 'charm-HOVER-olon-120.png' },
+        'bottom': { up: 'bottom-UP-olon-120.png', hover: 'bottom-HOVER-olon-120.png' },
+        'down': { up: 'down-UP-olon-120.png', hover: 'down-HOVER-olon-120.png' },
+        'strange': { up: 'strange-UP-olon-120.png', hover: 'strange-HOVER-olon-120.png' }
+      };
+
+      let updateCount = 0;
+      let errors = [];
+
+      for (const [slug, files] of Object.entries(categories)) {
+        const iconUp = uploadedUrls[files.up];
+        const iconHover = uploadedUrls[files.hover];
+
+        if (!iconUp || !iconHover) {
+          errors.push(`Missing files for ${slug}`);
+          continue;
+        }
+
+        const { error } = await supabase
+          .from('categories')
+          .update({
+            icon_up: iconUp,
+            icon_hover: iconHover
+          })
+          .eq('slug', slug);
+
+        if (error) {
+          errors.push(`${slug}: ${error.message}`);
+        } else {
+          updateCount++;
+        }
+      }
+
+      if (errors.length === 0) {
+        showStatus(`✅ Successfully updated ${updateCount} categories!`, 'success');
+      } else {
+        showStatus(`⚠️ Updated ${updateCount} categories. Errors: ${errors.join(', ')}`, 'error');
+      }
+    }
+
+    async function testImages() {
+      showStatus('⏳ Loading images from database...', 'info');
+
+      const { data, error } = await supabase
+        .from('categories')
+        .select('slug, name, icon_up, icon_hover')
+        .order('slug');
+
+      if (error) {
+        showStatus(`❌ Database error: ${error.message}`, 'error');
+        return;
+      }
+
+      const urlList = document.getElementById('urlList');
+      urlList.innerHTML = '<strong>Testing Images from Database:</strong><br><br>';
+
+      data.forEach(cat => {
+        urlList.innerHTML += `
+          <div class="url-item">
+            <strong>${cat.name} (${cat.slug})</strong><br>
+            <img src="${cat.icon_up}" style="width:60px; margin:5px;" onerror="this.style.border='2px solid red'" />
+            <img src="${cat.icon_hover}" style="width:60px; margin:5px;" onerror="this.style.border='2px solid red'" /><br>
+            UP: ${cat.icon_up}<br>
+            HOVER: ${cat.icon_hover}
+          </div>
+        `;
+      });
+
+      showStatus(`✅ Loaded ${data.length} categories. Check images below.`, 'success');
+    }
+  </script>
+</body>
+</html>

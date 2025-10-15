@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse posts by sentiment category on OLON Sentiment TV">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co; img-src 'self' data: https:; frame-src https://www.googletagmanager.com;">
+  <meta http-equiv="Cross-Origin-Embedder-Policy" content="credentialless">
+  <meta http-equiv="Cross-Origin-Resource-Policy" content="cross-origin">
+  <title>Category - OLON Sentiment TV</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/aura.css">
+  <link rel="stylesheet" href="/css/components.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="aura-background" id="aura-container">
+    <div class="aura-layer aura-layer-primary"></div>
+    <div class="aura-layer aura-layer-secondary"></div>
+    <div class="aura-layer aura-layer-tertiary"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="flex-between">
+        <a href="/" class="site-logo">
+          <span>OLON SENTIMENT TV</span>
+        </a>
+        <nav class="site-nav">
+          <a href="/">Home</a>
+          <a href="/#categories">Categories</a>
+          <a href="/#about">About</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="aura-content">
+
+    <section class="section">
+      <div class="container">
+
+        <div class="text-center mb-8" id="category-header">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
+
+        <div class="post-grid" id="post-grid">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>OLON Sentiment TV</h3>
+          <p>Explore content by emotion.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Categories</h3>
+          <div id="footer-categories"></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OLON Sentiment TV. Built with sentiment.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/aura.js"></script>
+  <script src="/js/header-logo.js"></script>
+  <script src="/js/categories.js"></script>
+  <script src="/js/posts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await window.olonDB.initSupabase();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug');
+
+      if (!slug) {
+        window.location.href = '/';
+        return;
+      }
+
+      const category = await window.olonDB.getCategoryBySlug(slug);
+
+      if (!category) {
+        document.getElementById('category-header').innerHTML =
+          '<p>Category not found.</p>';
+        return;
+      }
+
+      document.title = `${category.name} - OLON Sentiment TV`;
+      window.olonHeaderLogo.updateLogo(category.slug);
+
+      const header = document.getElementById('category-header');
+
+      const logoContainer = document.createElement('div');
+      logoContainer.className = 'category-page-logo';
+      logoContainer.innerHTML = `
+        <img src="/images/${category.slug}-UP-olon-120.png"
+             class="category-logo-default"
+             alt="${category.name} logo"
+             width="120"
+             height="120">
+        <img src="/images/${category.slug}-HOVER-olon-120.png"
+             class="category-logo-hover"
+             alt="${category.name} logo hover"
+             width="120"
+             height="120">
+      `;
+
+      const badge = document.createElement('span');
+      badge.className = `badge badge-${category.slug}`;
+      badge.style.fontSize = 'var(--font-size-sm)';
+      badge.textContent = category.name;
+
+      const title = document.createElement('h1');
+      title.textContent = category.name;
+      title.style.marginTop = 'var(--space-3)';
+
+      const description = document.createElement('p');
+      description.className = 'text-lg';
+      description.textContent = category.description;
+      description.style.marginTop = 'var(--space-3)';
+
+      const metaInfo = document.createElement('div');
+      metaInfo.style.marginTop = 'var(--space-4)';
+      metaInfo.style.opacity = '0.8';
+      metaInfo.style.fontSize = 'var(--font-size-sm)';
+
+      let metaHTML = '';
+      if (category.min_score && category.max_score) {
+        metaHTML += `<div>Score Range: ${category.min_score.toFixed(2)} - ${category.max_score.toFixed(2)}</div>`;
+      }
+      if (category.mode) {
+        metaHTML += `<div style="margin-top: var(--space-1);">Mode: ${category.mode} | Direction: ${category.direction || 'N/A'}</div>`;
+      }
+      if (category.spotify_playlist_id || category.youtube_playlist_id) {
+        metaHTML += `<div style="margin-top: var(--space-3); display: flex; gap: var(--space-3); justify-content: center;">`;
+        if (category.spotify_playlist_id) {
+          metaHTML += `<a href="https://open.spotify.com/playlist/${category.spotify_playlist_id}" target="_blank" rel="noopener" class="btn btn-${category.slug}" style="padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm);">Listen on Spotify</a>`;
+        }
+        if (category.youtube_playlist_id) {
+          metaHTML += `<a href="https://www.youtube.com/playlist?list=${category.youtube_playlist_id}" target="_blank" rel="noopener" class="btn btn-${category.slug}" style="padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm);">Watch on YouTube</a>`;
+        }
+        metaHTML += `</div>`;
+      }
+      metaInfo.innerHTML = metaHTML;
+
+      header.innerHTML = '';
+      header.appendChild(logoContainer);
+      header.appendChild(badge);
+      header.appendChild(title);
+      header.appendChild(description);
+      if (metaHTML) {
+        header.appendChild(metaInfo);
+      }
+
+      initAura(category.slug);
+      window.olonAura.applyCategoryColors(category);
+
+      await loadPostsByCategory(category.id);
+      await loadFooterCategories();
+    });
+  </script>
+
+</body>
+</html>

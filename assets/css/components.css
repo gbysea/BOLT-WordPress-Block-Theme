@@ -212,8 +212,39 @@
   transform: translateY(-10px);
   transition: opacity var(--transition-normal) var(--ease-out),
               visibility var(--transition-normal) var(--ease-out),
-              transform var(--transition-normal) var(--ease-out);
+              transform var(--transition-normal) var(--ease-out),
+              background var(--transition-normal) var(--ease-out);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+body.category-mode-top .nav-dropdown-menu {
+  background: rgba(var(--color-top-rgb), 0.15);
+  backdrop-filter: blur(10px);
+}
+
+body.category-mode-up .nav-dropdown-menu {
+  background: rgba(var(--color-up-rgb), 0.15);
+  backdrop-filter: blur(10px);
+}
+
+body.category-mode-charm .nav-dropdown-menu {
+  background: rgba(var(--color-charm-rgb), 0.15);
+  backdrop-filter: blur(10px);
+}
+
+body.category-mode-bottom .nav-dropdown-menu {
+  background: rgba(var(--color-bottom-rgb), 0.15);
+  backdrop-filter: blur(10px);
+}
+
+body.category-mode-down .nav-dropdown-menu {
+  background: rgba(var(--color-down-rgb), 0.15);
+  backdrop-filter: blur(10px);
+}
+
+body.category-mode-strange .nav-dropdown-menu {
+  background: rgba(var(--color-strange-rgb), 0.15);
+  backdrop-filter: blur(10px);
 }
 
 .nav-dropdown:hover .nav-dropdown-menu {
@@ -227,7 +258,32 @@
   padding: var(--space-3) var(--space-4);
   color: var(--color-white);
   border-radius: var(--radius-sm);
-  transition: background var(--transition-fast) var(--ease-out);
+  transition: background var(--transition-fast) var(--ease-out),
+              color var(--transition-fast) var(--ease-out);
+}
+
+body.category-mode-top .nav-dropdown-menu a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.category-mode-up .nav-dropdown-menu a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.category-mode-charm .nav-dropdown-menu a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.category-mode-bottom .nav-dropdown-menu a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.category-mode-down .nav-dropdown-menu a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.category-mode-strange .nav-dropdown-menu a {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .nav-dropdown-menu a:hover {

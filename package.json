@@ -4,7 +4,7 @@
   "description": "Sentiment Quark Universe - A quantum sentiment content platform",
   "type": "module",
   "scripts": {
-    "dev": "python3 -m http.server 5173",
+    "dev": "node server.js",
     "build": "echo 'Build complete - static site ready'"
   },
   "keywords": ["sentiment", "quark", "content", "supabase"],

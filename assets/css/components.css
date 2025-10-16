@@ -4,8 +4,17 @@
   z-index: var(--z-sticky);
   background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(10px);
-  padding: var(--space-4) 0;
+  padding: var(--space-3) 0;
   transition: background var(--transition-normal) var(--ease-out);
+}
+
+.header-container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0 var(--layout-gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .site-header.category-top {
@@ -74,16 +83,16 @@
 
 .site-logo-icon-wrapper {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 40px;
+  height: 40px;
 }
 
 .site-logo-icon {
   position: absolute;
   top: 0;
   left: 0;
-  width: 120px;
-  height: 120px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   transition: opacity var(--transition-normal) var(--ease-in-out), transform var(--transition-normal) var(--ease-out);
 }

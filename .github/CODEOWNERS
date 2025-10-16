@@ -1,0 +1,28 @@
+# Code Owners for BOLT WordPress Block Theme
+# These users/teams will automatically be requested for review on PRs
+
+# Global ownership - all files require review from project owner
+* @gbysea
+
+# WordPress theme specific files require theme expertise
+/olon-tv-block-theme/ @gbysea
+
+# Critical configuration files require extra attention
+/.github/ @gbysea
+/CONTRIBUTING.md @gbysea
+/README.md @gbysea
+
+# CSS and styling changes
+*.css @gbysea
+
+# JavaScript functionality
+*.js @gbysea
+
+# WordPress theme core files
+theme.json @gbysea
+functions.php @gbysea
+style.css @gbysea
+
+# Templates and parts require theme knowledge
+/templates/ @gbysea
+/parts/ @gbysea

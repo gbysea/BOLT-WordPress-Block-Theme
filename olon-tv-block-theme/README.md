@@ -2,6 +2,8 @@
 
 A sentiment-driven content experience powered by Supabase. Explore content across six quantum sentiment dimensions with dynamic aura visualization.
 
+**✨ UPDATED: Testing sync functionality** - This line added to test the sync script!
+
 ## Features
 
 - ✅ **6 Sentiment Categories**: Top, Up, Charm, Bottom, Down, Strange (quantum-inspired)

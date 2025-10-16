@@ -22,6 +22,8 @@ html {
 }
 
 body {
+  margin: 0 !important;
+  padding: 0 !important;
   font-family: var(--font-primary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-regular);
@@ -30,6 +32,7 @@ body {
   background: var(--color-black);
   overflow-x: hidden;
   min-height: 100vh;
+  width: 100%;
   transition: background var(--transition-normal) var(--ease-out),
               color var(--transition-normal) var(--ease-out);
 }

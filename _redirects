@@ -1,6 +1,0 @@
-# SPA fallback for category and post pages
-/category/* /category.html 200
-/post/* /post.html 200
-
-# Default fallback
-/* /index.html 200

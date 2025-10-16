@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (window.olonHeaderLogo) {
-      window.olonHeaderLogo.updateLogo('top', 'Quantum Sentiment Universe');
+      window.olonHeaderLogo.updateLogo('top', 'OLON');
     }
   }
 

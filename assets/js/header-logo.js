@@ -80,7 +80,7 @@ window.olonHeaderLogo = {
       const path = window.location.pathname;
 
       if (path === '/' || path === '/index.html') {
-        document.title = 'OLON Sentiment TV - Quantum Sentiment Universe';
+        document.title = 'OLON Sentiment TV';
       } else if (path.includes('/category/')) {
         document.title = `${categoryName} Category - OLON Sentiment TV`;
       } else {

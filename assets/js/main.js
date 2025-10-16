@@ -6,13 +6,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('OLON Sentiment TV initializing...');
 
-  // Check if config exists
+  // Check if config exists (for WordPress environment)
   if (typeof OLON_CONFIG !== 'undefined') {
-    console.log('OLON_CONFIG loaded:', {
+    console.log('OLON_CONFIG loaded (WordPress mode):', {
       hasSupabaseUrl: !!OLON_CONFIG.supabaseUrl,
       hasAnonKey: !!OLON_CONFIG.supabaseAnonKey,
       themeUrl: OLON_CONFIG.themeUrl
     });
+  } else {
+    console.log('Running in standalone mode');
   }
 
   // Initialize Supabase
@@ -93,8 +95,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else {
     // Homepage
     console.log('Loading homepage');
-    await loadCategories();
-    await loadRecentPosts();
+
+    if (typeof loadCategories === 'function') {
+      await loadCategories();
+    } else if (window.loadCategories) {
+      await window.loadCategories();
+    }
+
+    if (typeof loadRecentPosts === 'function') {
+      await loadRecentPosts();
+    } else if (window.loadRecentPosts) {
+      await window.loadRecentPosts();
+    }
 
     if (window.olonAura) {
       window.olonAura.initAura('top');
@@ -103,3 +115,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   console.log('OLON Sentiment TV initialized successfully');
 });
+
+// Expose functions globally for cross-module access
+if (typeof loadPostsByCategory === 'function') {
+  window.loadPostsByCategory = loadPostsByCategory;
+}

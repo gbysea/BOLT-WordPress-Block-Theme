@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://irbflzzuamvvujebhter.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlyYmZsenp1YW12dnVqZWJodGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDAwOTYsImV4cCI6MjA3NjAxNjA5Nn0.MaKWPrMGIZYDC7r084VnkI4Gvji5cC0c8s4kgTqXHP0';
+const SUPABASE_URL = window.OLON_SUPABASE_URL || 'https://irbflzzuamvvujebhter.supabase.co';
+const SUPABASE_ANON_KEY = window.OLON_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlyYmZsenp1YW12dnVqZWJodGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDAwOTYsImV4cCI6MjA3NjAxNjA5Nn0.MaKWPrMGIZYDC7r084VnkI4Gvji5cC0c8s4kgTqXHP0';
 
 let supabase = null;
 
@@ -8,7 +8,14 @@ async function initSupabase() {
     console.error('Supabase library not loaded');
     return null;
   }
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.error('Supabase credentials not configured');
+    return null;
+  }
+
   supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  console.log('Supabase initialized successfully');
   return supabase;
 }
 

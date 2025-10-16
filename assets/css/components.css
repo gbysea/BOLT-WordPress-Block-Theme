@@ -163,7 +163,7 @@
 }
 
 .nav-dropdown-toggle {
-  background: none;
+  background: none !important;
   border: none;
   color: var(--color-white);
   font-size: var(--font-size-sm);
@@ -174,6 +174,10 @@
   align-items: center;
   gap: var(--space-2);
   transition: color var(--transition-normal) var(--ease-out);
+}
+
+.nav-dropdown-toggle:hover {
+  background: none !important;
 }
 
 .nav-dropdown-toggle::after {
@@ -253,6 +257,43 @@
 .site-header.category-strange .nav-dropdown-toggle:hover,
 .site-header.category-strange .nav-dropdown-menu a:hover {
   color: var(--color-strange);
+}
+
+/* Category Mode Colors for Navigation Dropdown */
+body.category-mode-top .nav-dropdown-toggle,
+body.category-mode-top .nav-dropdown-toggle:hover {
+  color: var(--color-top) !important;
+  background: none !important;
+}
+
+body.category-mode-up .nav-dropdown-toggle,
+body.category-mode-up .nav-dropdown-toggle:hover {
+  color: var(--color-up) !important;
+  background: none !important;
+}
+
+body.category-mode-charm .nav-dropdown-toggle,
+body.category-mode-charm .nav-dropdown-toggle:hover {
+  color: var(--color-charm) !important;
+  background: none !important;
+}
+
+body.category-mode-bottom .nav-dropdown-toggle,
+body.category-mode-bottom .nav-dropdown-toggle:hover {
+  color: var(--color-bottom) !important;
+  background: none !important;
+}
+
+body.category-mode-down .nav-dropdown-toggle,
+body.category-mode-down .nav-dropdown-toggle:hover {
+  color: var(--color-down) !important;
+  background: none !important;
+}
+
+body.category-mode-strange .nav-dropdown-toggle,
+body.category-mode-strange .nav-dropdown-toggle:hover {
+  color: var(--color-strange) !important;
+  background: none !important;
 }
 
 .site-footer {

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Quark Universe</title>
+    <link rel="stylesheet" href="/assets/css/variables.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/aura.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div id="aura-container" class="aura-background">
+        <div class="aura-layer aura-layer-primary"></div>
+        <div class="aura-layer aura-layer-secondary"></div>
+        <div class="aura-layer aura-layer-tertiary"></div>
+    </div>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div id="header-logo" class="site-logo"></div>
+                <nav class="main-nav">
+                    <a href="/">Home</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-content">
+        <div class="container section">
+            <h1 class="hero-title text-center mb-8">Sentiment Quark Universe</h1>
+            <p class="hero-subtitle text-center mb-8">Explore content across six quantum sentiment dimensions</p>
+
+            <div id="category-grid" class="category-grid mb-8"></div>
+
+            <h2 class="text-center mb-6">Latest Content</h2>
+            <div id="post-grid" class="post-grid"></div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p class="text-center">&copy; 2025 Sentiment Quark Universe. Powered by quantum sentiment.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/assets/js/supabase-client.js"></script>
+    <script type="module" src="/assets/js/aura.js"></script>
+    <script type="module" src="/assets/js/header-logo.js"></script>
+    <script type="module" src="/assets/js/categories.js"></script>
+    <script type="module" src="/assets/js/posts.js"></script>
+    <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>

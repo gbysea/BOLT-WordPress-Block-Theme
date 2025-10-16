@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.olonAura.changeAuraSentiment(category.slug);
       }
       if (window.olonHeaderLogo) {
-        window.olonHeaderLogo.updateLogo(category.slug);
+        window.olonHeaderLogo.updateLogo(category.slug, category.name);
       }
     }
   } else if (path.includes('/post/')) {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           window.olonAura.changeAuraSentiment(post.category.slug);
         }
         if (window.olonHeaderLogo) {
-          window.olonHeaderLogo.updateLogo(post.category.slug);
+          window.olonHeaderLogo.updateLogo(post.category.slug, post.title);
         }
       }
     }
@@ -83,13 +83,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (category) {
         await loadPostsByCategory(category.id);
         if (window.olonAura) window.olonAura.changeAuraSentiment(category.slug);
-        if (window.olonHeaderLogo) window.olonHeaderLogo.updateLogo(category.slug);
+        if (window.olonHeaderLogo) window.olonHeaderLogo.updateLogo(category.slug, category.name);
       }
     } else if (path.includes('post.html')) {
       const post = await window.olonDB.getPostBySlug(slug);
-      if (post && post.category) {
-        if (window.olonAura) window.olonAura.changeAuraSentiment(post.category.slug);
-        if (window.olonHeaderLogo) window.olonHeaderLogo.updateLogo(post.category.slug);
+      if (post) {
+        if (post.category) {
+          if (window.olonAura) window.olonAura.changeAuraSentiment(post.category.slug);
+          if (window.olonHeaderLogo) window.olonHeaderLogo.updateLogo(post.category.slug, post.title);
+        }
       }
     }
   } else {
@@ -110,6 +112,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (window.olonAura) {
       window.olonAura.initAura('top');
+    }
+
+    if (window.olonHeaderLogo) {
+      window.olonHeaderLogo.updateLogo('top', 'Quantum Sentiment Universe');
     }
   }
 

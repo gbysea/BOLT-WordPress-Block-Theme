@@ -267,13 +267,17 @@ body.category-mode-top .nav-dropdown-toggle:hover {
 }
 
 body.category-mode-top .nav-dropdown-menu {
-  background: rgba(0, 0, 0, 0.95);
-  border-color: rgba(var(--color-top-rgb), 0.3);
+  background: rgba(var(--color-top-rgb), 0.95);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.category-mode-top .nav-dropdown-menu a {
+  color: var(--color-white) !important;
 }
 
 body.category-mode-top .nav-dropdown-menu a:hover {
-  color: var(--color-top) !important;
-  background: rgba(var(--color-top-rgb), 0.15) !important;
+  color: var(--color-white) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 body.category-mode-up .nav-dropdown-toggle,
@@ -283,13 +287,17 @@ body.category-mode-up .nav-dropdown-toggle:hover {
 }
 
 body.category-mode-up .nav-dropdown-menu {
-  background: rgba(0, 0, 0, 0.95);
-  border-color: rgba(var(--color-up-rgb), 0.3);
+  background: rgba(var(--color-up-rgb), 0.95);
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+body.category-mode-up .nav-dropdown-menu a {
+  color: var(--color-black) !important;
 }
 
 body.category-mode-up .nav-dropdown-menu a:hover {
-  color: var(--color-up) !important;
-  background: rgba(var(--color-up-rgb), 0.15) !important;
+  color: var(--color-black) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
 }
 
 body.category-mode-charm .nav-dropdown-toggle,
@@ -299,13 +307,17 @@ body.category-mode-charm .nav-dropdown-toggle:hover {
 }
 
 body.category-mode-charm .nav-dropdown-menu {
-  background: rgba(0, 0, 0, 0.95);
-  border-color: rgba(var(--color-charm-rgb), 0.3);
+  background: rgba(var(--color-charm-rgb), 0.95);
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+body.category-mode-charm .nav-dropdown-menu a {
+  color: var(--color-black) !important;
 }
 
 body.category-mode-charm .nav-dropdown-menu a:hover {
-  color: var(--color-charm) !important;
-  background: rgba(var(--color-charm-rgb), 0.15) !important;
+  color: var(--color-black) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
 }
 
 body.category-mode-bottom .nav-dropdown-toggle,
@@ -315,13 +327,17 @@ body.category-mode-bottom .nav-dropdown-toggle:hover {
 }
 
 body.category-mode-bottom .nav-dropdown-menu {
-  background: rgba(0, 0, 0, 0.95);
-  border-color: rgba(var(--color-bottom-rgb), 0.3);
+  background: rgba(var(--color-bottom-rgb), 0.95);
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+body.category-mode-bottom .nav-dropdown-menu a {
+  color: var(--color-black) !important;
 }
 
 body.category-mode-bottom .nav-dropdown-menu a:hover {
-  color: var(--color-bottom) !important;
-  background: rgba(var(--color-bottom-rgb), 0.15) !important;
+  color: var(--color-black) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
 }
 
 body.category-mode-down .nav-dropdown-toggle,
@@ -331,13 +347,17 @@ body.category-mode-down .nav-dropdown-toggle:hover {
 }
 
 body.category-mode-down .nav-dropdown-menu {
-  background: rgba(0, 0, 0, 0.95);
-  border-color: rgba(var(--color-down-rgb), 0.3);
+  background: rgba(var(--color-down-rgb), 0.95);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.category-mode-down .nav-dropdown-menu a {
+  color: var(--color-white) !important;
 }
 
 body.category-mode-down .nav-dropdown-menu a:hover {
-  color: var(--color-down) !important;
-  background: rgba(var(--color-down-rgb), 0.15) !important;
+  color: var(--color-white) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 body.category-mode-strange .nav-dropdown-toggle,
@@ -347,13 +367,17 @@ body.category-mode-strange .nav-dropdown-toggle:hover {
 }
 
 body.category-mode-strange .nav-dropdown-menu {
-  background: rgba(0, 0, 0, 0.95);
-  border-color: rgba(var(--color-strange-rgb), 0.3);
+  background: rgba(var(--color-strange-rgb), 0.95);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.category-mode-strange .nav-dropdown-menu a {
+  color: var(--color-white) !important;
 }
 
 body.category-mode-strange .nav-dropdown-menu a:hover {
-  color: var(--color-strange) !important;
-  background: rgba(var(--color-strange-rgb), 0.15) !important;
+  color: var(--color-white) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 .site-footer {

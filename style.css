@@ -1,0 +1,31 @@
+/*
+Theme Name: OLON Sentiment TV
+Theme URI: https://github.com/yourusername/olon-sentiment-tv
+Author: OLON Team
+Author URI: https://github.com/yourusername
+Description: A sentiment-driven content experience powered by Supabase. Features six quantum sentiment categories (Top, Up, Charm, Bottom, Down, Strange) with dynamic aura visualization and real-time data integration.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: MIT
+License URI: https://opensource.org/licenses/MIT
+Text Domain: olon-sentiment-tv
+Tags: block-theme, custom-menu, full-site-editing, supabase, real-time, sentiment-analysis
+
+OLON Sentiment TV - Quantum Sentiment Content Platform
+======================================================
+
+This theme requires:
+- WordPress 6.0+
+- Supabase account and API credentials
+- Modern browser with JavaScript enabled
+
+Installation:
+1. Upload theme to /wp-content/themes/
+2. Add Supabase credentials to wp-config.php
+3. Activate theme in WordPress admin
+4. Visit site homepage to test
+
+For documentation, see README.md
+*/

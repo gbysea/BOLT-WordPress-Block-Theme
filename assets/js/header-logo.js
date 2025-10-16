@@ -33,13 +33,13 @@ window.olonHeaderLogo = {
         <img src="${imagePath}/${categorySlug}-HOVER-olon-120.png"
              class="site-logo-icon site-logo-icon-default"
              alt="${categorySlug} category"
-             width="40"
-             height="40">
+             width="120"
+             height="120">
         <img src="${imagePath}/${categorySlug}-UP-olon-120.png"
              class="site-logo-icon site-logo-icon-hover"
              alt="${categorySlug} category hover"
-             width="40"
-             height="40">
+             width="120"
+             height="120">
       `;
 
       logoContainer.insertBefore(iconWrapper, logoContainer.firstChild);

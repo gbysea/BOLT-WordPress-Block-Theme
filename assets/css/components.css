@@ -74,16 +74,16 @@
 
 .site-logo-icon-wrapper {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 120px;
+  height: 120px;
 }
 
 .site-logo-icon {
   position: absolute;
   top: 0;
   left: 0;
-  width: 40px;
-  height: 40px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
   transition: opacity var(--transition-normal) var(--ease-in-out), transform var(--transition-normal) var(--ease-out);
 }

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category - Sentiment Quark Universe</title>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/aura.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div id="aura-container" class="aura-background">
+        <div class="aura-layer aura-layer-primary"></div>
+        <div class="aura-layer aura-layer-secondary"></div>
+        <div class="aura-layer aura-layer-tertiary"></div>
+    </div>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div id="header-logo" class="site-logo"></div>
+                <nav class="main-nav">
+                    <a href="/">Home</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-content">
+        <div class="container section">
+            <div id="category-header" class="category-header mb-8"></div>
+            <div id="category-posts" class="post-grid"></div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p class="text-center">&copy; 2025 Sentiment Quark Universe. Powered by quantum sentiment.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initSupabase, getCategoryBySlug, getPostsByCategory } from '/js/supabase-client.js';
+
+        async function loadCategoryPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+
+            if (!slug) {
+                window.location.href = '/';
+                return;
+            }
+
+            await initSupabase();
+            const category = await getCategoryBySlug(slug);
+
+            if (!category) {
+                window.location.href = '/';
+                return;
+            }
+
+            const headerDiv = document.getElementById('category-header');
+            headerDiv.innerHTML = `
+                <div class="category-icon-large">
+                    <img src="${category.icon_url}" alt="${category.name}" class="icon-default">
+                    <img src="${category.icon_hover_url}" alt="${category.name}" class="icon-hover">
+                </div>
+                <h1 class="text-center">${category.name}</h1>
+                <p class="text-center category-description">${category.description || ''}</p>
+            `;
+
+            const posts = await getPostsByCategory(category.id);
+            const postsDiv = document.getElementById('category-posts');
+
+            if (posts.length === 0) {
+                postsDiv.innerHTML = '<p class="text-center">No posts in this category yet.</p>';
+                return;
+            }
+
+            postsDiv.innerHTML = posts.map(post => `
+                <article class="post-card">
+                    <a href="/post.html?slug=${post.slug}">
+                        <h3 class="post-title">${post.title}</h3>
+                        <p class="post-excerpt">${post.excerpt || ''}</p>
+                        <div class="post-meta">
+                            <span class="post-category">${post.category.name}</span>
+                            <span class="post-date">${new Date(post.created_at).toLocaleDateString()}</span>
+                        </div>
+                    </a>
+                </article>
+            `).join('');
+        }
+
+        loadCategoryPage();
+    </script>
+    <script type="module" src="/js/aura.js"></script>
+    <script type="module" src="/js/header-logo.js"></script>
+</body>
+</html>

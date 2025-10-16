@@ -1,0 +1,111 @@
+:root {
+  --color-top: #ff0000;
+  --color-top-dark: #cc0000;
+  --color-top-light: #ff6666;
+  --color-top-rgb: 255, 0, 0;
+
+  --color-up: #ffff00;
+  --color-up-dark: #cccc00;
+  --color-up-light: #ffff99;
+  --color-up-rgb: 255, 255, 0;
+
+  --color-charm: #00ff00;
+  --color-charm-dark: #00cc00;
+  --color-charm-light: #66ff66;
+  --color-charm-rgb: 0, 255, 0;
+
+  --color-bottom: #00ffff;
+  --color-bottom-dark: #00cccc;
+  --color-bottom-light: #66ffff;
+  --color-bottom-rgb: 0, 255, 255;
+
+  --color-down: #0000ff;
+  --color-down-dark: #0000cc;
+  --color-down-light: #6666ff;
+  --color-down-rgb: 0, 0, 255;
+
+  --color-strange: #ff00ff;
+  --color-strange-dark: #cc00cc;
+  --color-strange-light: #ff66ff;
+  --color-strange-rgb: 255, 0, 255;
+
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gray-dark: #333333;
+  --color-gray: #666666;
+  --color-gray-light: #999999;
+
+  --font-primary: 'Geologica', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 3rem;
+  --font-size-4xl: 4rem;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+  --space-10: 4rem;
+  --space-12: 6rem;
+
+  --layout-max-width: 1200px;
+  --layout-content-width: 800px;
+  --layout-gutter: var(--space-4);
+
+  --button-height: 40px;
+  --button-border-radius: 100px;
+  --button-padding-x: 24px;
+  --button-font-size: var(--font-size-sm);
+  --button-font-weight: var(--font-weight-medium);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 100px;
+
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  --transition-aura: 2000ms;
+
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --aura-intensity: 0.7;
+  --aura-opacity-min: 0.3;
+  --aura-opacity-max: 0.7;
+  --aura-blur-radius: 100px;
+  --aura-pulse-duration: 3000ms;
+  --aura-blend-mode: overlay;
+
+  --z-background: -1;
+  --z-base: 0;
+  --z-sticky: 200;
+
+  --grid-gap: var(--space-4);
+}
+
+.category-top { --category-color: var(--color-top); --category-color-dark: var(--color-top-dark); --category-color-light: var(--color-top-light); }
+.category-up { --category-color: var(--color-up); --category-color-dark: var(--color-up-dark); --category-color-light: var(--color-up-light); }
+.category-charm { --category-color: var(--color-charm); --category-color-dark: var(--color-charm-dark); --category-color-light: var(--color-charm-light); }
+.category-bottom { --category-color: var(--color-bottom); --category-color-dark: var(--color-bottom-dark); --category-color-light: var(--color-bottom-light); }
+.category-down { --category-color: var(--color-down); --category-color-dark: var(--color-down-dark); --category-color-light: var(--color-down-light); }
+.category-strange { --category-color: var(--color-strange); --category-color-dark: var(--color-strange-dark); --category-color-light: var(--color-strange-light); }

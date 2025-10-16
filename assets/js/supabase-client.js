@@ -1,5 +1,9 @@
-const SUPABASE_URL = window.OLON_SUPABASE_URL || 'https://irbflzzuamvvujebhter.supabase.co';
-const SUPABASE_ANON_KEY = window.OLON_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlyYmZsenp1YW12dnVqZWJodGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDAwOTYsImV4cCI6MjA3NjAxNjA5Nn0.MaKWPrMGIZYDC7r084VnkI4Gvji5cC0c8s4kgTqXHP0';
+const SUPABASE_URL = (typeof OLON_CONFIG !== 'undefined' && OLON_CONFIG.supabaseUrl)
+  ? OLON_CONFIG.supabaseUrl
+  : (window.OLON_SUPABASE_URL || 'https://irbflzzuamvvujebhter.supabase.co');
+const SUPABASE_ANON_KEY = (typeof OLON_CONFIG !== 'undefined' && OLON_CONFIG.supabaseAnonKey)
+  ? OLON_CONFIG.supabaseAnonKey
+  : (window.OLON_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlyYmZsenp1YW12dnVqZWJodGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDAwOTYsImV4cCI6MjA3NjAxNjA5Nn0.MaKWPrMGIZYDC7r084VnkI4Gvji5cC0c8s4kgTqXHP0');
 
 let supabase = null;
 

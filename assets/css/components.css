@@ -157,6 +157,104 @@
   color: var(--color-strange);
 }
 
+/* Navigation Dropdown */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: color var(--transition-normal) var(--ease-out);
+}
+
+.nav-dropdown-toggle::after {
+  content: '▼';
+  font-size: 0.7em;
+  transition: transform var(--transition-normal) var(--ease-out);
+}
+
+.nav-dropdown:hover .nav-dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity var(--transition-normal) var(--ease-out),
+              visibility var(--transition-normal) var(--ease-out),
+              transform var(--transition-normal) var(--ease-out);
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast) var(--ease-out),
+              color var(--transition-fast) var(--ease-out);
+}
+
+.nav-dropdown-menu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.site-header.category-top .nav-dropdown-toggle:hover,
+.site-header.category-top .nav-dropdown-menu a:hover {
+  color: var(--color-top);
+}
+
+.site-header.category-up .nav-dropdown-toggle:hover,
+.site-header.category-up .nav-dropdown-menu a:hover {
+  color: var(--color-up);
+}
+
+.site-header.category-charm .nav-dropdown-toggle:hover,
+.site-header.category-charm .nav-dropdown-menu a:hover {
+  color: var(--color-charm);
+}
+
+.site-header.category-bottom .nav-dropdown-toggle:hover,
+.site-header.category-bottom .nav-dropdown-menu a:hover {
+  color: var(--color-bottom);
+}
+
+.site-header.category-down .nav-dropdown-toggle:hover,
+.site-header.category-down .nav-dropdown-menu a:hover {
+  color: var(--color-down);
+}
+
+.site-header.category-strange .nav-dropdown-toggle:hover,
+.site-header.category-strange .nav-dropdown-menu a:hover {
+  color: var(--color-strange);
+}
+
 .site-footer {
   padding: var(--space-10) 0 var(--space-6);
   margin-top: var(--space-12);

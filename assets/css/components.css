@@ -694,6 +694,8 @@ body.category-mode-strange .post-meta {
   color: var(--color-gray-light);
   margin-bottom: var(--space-8);
   max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-actions {

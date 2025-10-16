@@ -141,12 +141,12 @@ async function loadCategories() {
 
       card.innerHTML = `
         <div class="category-logo">
-          <img src="/images/${category.slug}-UP-olon-120.svg"
+          <img src="/images/${category.slug}-UP-olon-120.png"
                class="category-logo-default"
                alt="${category.name} logo"
                width="120"
                height="120">
-          <img src="/images/${category.slug}-HOVER-olon-120.svg"
+          <img src="/images/${category.slug}-HOVER-olon-120.png"
                class="category-logo-hover"
                alt="${category.name} logo hover"
                width="120"

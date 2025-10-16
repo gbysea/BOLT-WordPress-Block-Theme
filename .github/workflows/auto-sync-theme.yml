@@ -1,0 +1,52 @@
+name: Auto-Sync Theme Folder
+
+on:
+  push:
+    branches: [ olon-tv-block-theme ]
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  sync-theme-folder:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for all branches
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Configure Git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+    
+    - name: Switch to main branch
+      run: git checkout main
+    
+    - name: Remove existing theme folder
+      run: |
+        if [ -d "olon-tv-block-theme" ]; then
+          git rm -r olon-tv-block-theme/ || rm -rf olon-tv-block-theme/
+        fi
+    
+    - name: Sync theme folder from branch
+      run: |
+        echo "🔄 Syncing olon-tv-block-theme folder from branch..."
+        git read-tree --prefix=olon-tv-block-theme/ -u olon-tv-block-theme
+    
+    - name: Commit and push changes
+      run: |
+        git add olon-tv-block-theme/
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "🤖 Auto-sync: Update olon-tv-block-theme folder from branch
+
+          - Automatically synced from olon-tv-block-theme branch
+          - Triggered by push to olon-tv-block-theme branch
+          - Commit SHA: ${{ github.sha }}"
+          
+          git push origin main
+          echo "✅ Successfully synced theme folder!"
+        fi

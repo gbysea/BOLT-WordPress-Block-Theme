@@ -120,15 +120,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Homepage
     console.log('Loading homepage');
 
-    if (typeof loadCategories === 'function') {
-      await loadCategories();
-    } else if (window.loadCategories) {
+    if (window.loadCategories) {
       await window.loadCategories();
     }
 
-    if (typeof loadRecentPosts === 'function') {
-      await loadRecentPosts();
-    } else if (window.loadRecentPosts) {
+    if (window.loadRecentPosts) {
       await window.loadRecentPosts();
     }
 
@@ -143,8 +139,3 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   console.log('OLON Sentiment TV initialized successfully');
 });
-
-// Expose functions globally for cross-module access
-if (typeof loadPostsByCategory === 'function') {
-  window.loadPostsByCategory = loadPostsByCategory;
-}

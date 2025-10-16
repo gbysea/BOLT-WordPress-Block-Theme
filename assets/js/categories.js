@@ -41,12 +41,12 @@ function createCategoryCard(category, postCount = 0) {
 
   card.innerHTML = `
     <div class="category-logo">
-      <img src="${typeof OLON_CONFIG !== 'undefined' && OLON_CONFIG.themeUrl ? OLON_CONFIG.themeUrl + '/assets/images' : '/images'}/${category.slug}-UP-olon-120.png"
+      <img src="${typeof OLON_CONFIG !== 'undefined' && OLON_CONFIG.themeUrl ? OLON_CONFIG.themeUrl + '/assets/images' : '/assets/images'}/${category.slug}-UP-olon-120.png"
            class="category-logo-default"
            alt="${category.name} logo"
            width="120"
            height="120">
-      <img src="${typeof OLON_CONFIG !== 'undefined' && OLON_CONFIG.themeUrl ? OLON_CONFIG.themeUrl + '/assets/images' : '/images'}/${category.slug}-HOVER-olon-120.png"
+      <img src="${typeof OLON_CONFIG !== 'undefined' && OLON_CONFIG.themeUrl ? OLON_CONFIG.themeUrl + '/assets/images' : '/assets/images'}/${category.slug}-HOVER-olon-120.png"
            class="category-logo-hover"
            alt="${category.name} logo hover"
            width="120"
@@ -77,3 +77,7 @@ async function loadFooterCategories() {
     console.error('Error loading footer categories:', error);
   }
 }
+
+// Expose functions globally
+window.loadCategories = loadCategories;
+window.loadFooterCategories = loadFooterCategories;

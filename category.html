@@ -92,8 +92,8 @@
     document.addEventListener('DOMContentLoaded', async () => {
       await window.olonDB.initSupabase();
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const slug = urlParams.get('slug');
+      const pathParts = window.location.pathname.split('/').filter(p => p);
+      const slug = pathParts[1];
 
       if (!slug) {
         window.location.href = '/';

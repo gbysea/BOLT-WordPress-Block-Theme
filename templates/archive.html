@@ -14,9 +14,17 @@
     <!-- wp:group {"className":"container section","layout":{"type":"constrained"}} -->
     <div class="wp-block-group container section">
 
-        <!-- wp:heading {"level":1,"className":"text-center mb-8","fontSize":"x-large"} -->
-        <h1 class="wp-block-heading text-center mb-8 has-x-large-font-size">Category Archive</h1>
-        <!-- /wp:heading -->
+        <!-- wp:group {"className":"text-center mb-8","layout":{"type":"constrained"}} -->
+        <div class="wp-block-group text-center mb-8">
+            <!-- wp:heading {"level":1,"className":"hero-title mb-4","fontSize":"x-large"} -->
+            <h1 class="wp-block-heading hero-title mb-4 has-x-large-font-size">Category Archive</h1>
+            <!-- /wp:heading -->
+
+            <!-- wp:paragraph {"className":"hero-subtitle","fontSize":"large"} -->
+            <p class="hero-subtitle has-large-font-size">Explore content in this sentiment category</p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:group -->
 
         <!-- wp:html -->
         <div id="post-grid" class="post-grid"></div>

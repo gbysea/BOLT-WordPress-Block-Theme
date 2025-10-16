@@ -9,16 +9,14 @@ if ! git rev-parse --git-dir > /dev/null 2>&1; then
     exit 1
 fi
 
-# Check if branch exists
-if ! git rev-parse --verify olon-tv-block-theme > /dev/null 2>&1; then
-    echo "❌ Error: Branch 'olon-tv-block-theme' doesn't exist."
-    echo "Please create it first in GitHub or run: git checkout -b olon-tv-block-theme"
-    exit 1
-fi
+# Fetch latest from remote
+echo "🔄 Fetching latest changes..."
+git fetch origin
 
 # Switch to the branch
 echo "📦 Switching to olon-tv-block-theme branch..."
 git checkout olon-tv-block-theme
+git pull origin olon-tv-block-theme
 
 # Check if wordpress-theme folder exists
 if [ ! -d "wordpress-theme" ]; then
@@ -26,35 +24,35 @@ if [ ! -d "wordpress-theme" ]; then
     exit 1
 fi
 
-echo "🧹 Cleaning branch (removing non-theme files)..."
+echo "🧹 Cleaning branch (removing all non-theme files)..."
 
-# Remove all files except wordpress-theme folder
-git rm -r .env functions.php README.md style.css theme.json VERIFICATION.md parts/ templates/ assets/ 2>/dev/null || true
+# Create a temporary directory for theme files
+mkdir -p /tmp/olon-theme-backup
+cp -r wordpress-theme/* /tmp/olon-theme-backup/
 
-echo "📝 Renaming wordpress-theme to olon-tv-block-theme..."
+# Remove everything from git
+git rm -rf .
 
-# Rename the folder
-mv wordpress-theme olon-tv-block-theme
+# Copy theme files back to root
+cp -r /tmp/olon-theme-backup/* .
 
-# Stage the renamed folder
-git add olon-tv-block-theme/
+# Clean up temp directory
+rm -rf /tmp/olon-theme-backup
 
-# Commit the changes
-echo "💾 Committing changes..."
-git commit -m "Clean branch: WordPress theme only in olon-tv-block-theme folder"
-
-echo "🔄 Moving theme files to root..."
-
-# Move everything to root
-mv olon-tv-block-theme/* .
-mv olon-tv-block-theme/.* . 2>/dev/null || true
-rmdir olon-tv-block-theme
+# Update style.css theme folder name
+if [ -f "style.css" ]; then
+    echo "📝 Updating theme name in style.css..."
+    sed -i.bak 's/Text Domain: bolt-wordpress-block-theme/Text Domain: olon-tv-block-theme/g' style.css
+    sed -i.bak 's/Theme Name: BOLT WordPress Block Theme/Theme Name: OLON TV Block Theme/g' style.css
+    rm -f style.css.bak
+fi
 
 # Stage all changes
 git add .
 
 # Commit
-git commit -m "Move theme files to root for clean deployment"
+echo "💾 Committing clean theme structure..."
+git commit -m "Clean theme branch: Move all theme files to root"
 
 echo "☁️  Pushing to GitHub..."
 git push origin olon-tv-block-theme
@@ -62,9 +60,14 @@ git push origin olon-tv-block-theme
 echo ""
 echo "✅ Done! Your olon-tv-block-theme branch is ready."
 echo ""
-echo "📋 Next steps:"
+echo "📋 Branch structure:"
+echo "   Root contains: style.css, theme.json, functions.php, README.md"
+echo "   + assets/, parts/, templates/ folders"
+echo ""
+echo "🎯 Next steps:"
 echo "1. Go to WordPress Admin → Deployer for Git"
-echo "2. Set Branch: olon-tv-block-theme"
-echo "3. Set Deploy path: /wp-content/themes/olon-tv-block-theme/"
-echo "4. Save and deploy!"
+echo "2. Repository: https://github.com/gbysea/BOLT-WordPress-Block-Theme"
+echo "3. Branch: olon-tv-block-theme"
+echo "4. Deploy path: /wp-content/themes/olon-tv-block-theme/"
+echo "5. Save and deploy!"
 echo ""

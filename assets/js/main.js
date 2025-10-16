@@ -3,6 +3,15 @@
  * Initializes all modules and handles page-specific logic
  */
 
+const CATEGORY_DESCRIPTIONS = {
+  top: 'Peak sentiment intensity • Maximum positive resonance • Highest energy state',
+  up: 'Rising optimism • Ascending momentum • Upward trajectory of positivity',
+  charm: 'Delightful experiences • Captivating moments • Enchanting perspectives',
+  bottom: 'Foundational depth • Core stability • Grounded authenticity',
+  down: 'Introspective descent • Deep reflection • Contemplative exploration',
+  strange: 'Unusual patterns • Unexpected insights • Unconventional perspectives'
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('OLON Sentiment TV initializing...');
 
@@ -40,7 +49,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (category) {
       const h1 = document.querySelector('h1');
+      const subtitle = document.querySelector('.hero-subtitle');
+
       if (h1) h1.textContent = category.name;
+      if (subtitle && CATEGORY_DESCRIPTIONS[category.slug]) {
+        subtitle.textContent = CATEGORY_DESCRIPTIONS[category.slug];
+      }
 
       await loadPostsByCategory(category.id);
 
@@ -81,6 +95,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (path.includes('category.html')) {
       const category = await window.olonDB.getCategoryBySlug(slug);
       if (category) {
+        const h1 = document.querySelector('h1');
+        const subtitle = document.querySelector('.hero-subtitle');
+
+        if (h1) h1.textContent = category.name;
+        if (subtitle && CATEGORY_DESCRIPTIONS[category.slug]) {
+          subtitle.textContent = CATEGORY_DESCRIPTIONS[category.slug];
+        }
+
         await loadPostsByCategory(category.id);
         if (window.olonAura) window.olonAura.changeAuraSentiment(category.slug);
         if (window.olonHeaderLogo) window.olonHeaderLogo.updateLogo(category.slug, category.name);

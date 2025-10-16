@@ -234,6 +234,36 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+body.category-mode-top .nav-dropdown-menu a:hover {
+  background: rgba(var(--color-top-rgb), 0.2);
+  color: var(--color-top);
+}
+
+body.category-mode-up .nav-dropdown-menu a:hover {
+  background: rgba(var(--color-up-rgb), 0.2);
+  color: var(--color-up);
+}
+
+body.category-mode-charm .nav-dropdown-menu a:hover {
+  background: rgba(var(--color-charm-rgb), 0.2);
+  color: var(--color-charm);
+}
+
+body.category-mode-bottom .nav-dropdown-menu a:hover {
+  background: rgba(var(--color-bottom-rgb), 0.2);
+  color: var(--color-bottom);
+}
+
+body.category-mode-down .nav-dropdown-menu a:hover {
+  background: rgba(var(--color-down-rgb), 0.2);
+  color: var(--color-down);
+}
+
+body.category-mode-strange .nav-dropdown-menu a:hover {
+  background: rgba(var(--color-strange-rgb), 0.2);
+  color: var(--color-strange);
+}
+
 .site-footer {
   padding: var(--space-10) 0 var(--space-6);
   margin-top: var(--space-12);

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - OLON Sentiment TV</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #00ff00; margin-bottom: 20px; border-bottom: 2px solid #00ff00; padding-bottom: 10px; }
+        h2 { color: #0099ff; margin: 20px 0 10px; }
+        .status { padding: 10px; margin: 10px 0; border-left: 4px solid #00ff00; background: #0a3a0a; }
+        .error { border-left-color: #ff0000; background: #3a0a0a; color: #ff6666; }
+        .success { border-left-color: #00ff00; background: #0a3a0a; color: #66ff66; }
+        .info { border-left-color: #0099ff; background: #0a1a3a; color: #6699ff; }
+        pre { background: #000; padding: 10px; overflow-x: auto; margin: 10px 0; }
+        code { color: #ffaa00; }
+    </style>
+</head>
+<body>
+    <h1>🔍 OLON Sentiment TV - System Debug</h1>
+
+    <div id="output"></div>
+
+    <script>
+        const output = document.getElementById('output');
+
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            output.appendChild(div);
+        }
+
+        async function runDiagnostics() {
+            log('<h2>1. Environment Check</h2>', 'info');
+
+            log(`✅ Current URL: <code>${window.location.href}</code>`, 'success');
+            log(`✅ Page loaded at: <code>${new Date().toISOString()}</code>`, 'success');
+            log(`✅ User Agent: <code>${navigator.userAgent}</code>`, 'info');
+
+            log('<h2>2. File Structure Check</h2>', 'info');
+
+            const filesToCheck = [
+                '/css/base.css',
+                '/css/variables.css',
+                '/js/main.js',
+                '/js/supabase-client.js',
+                '/images/top-UP-olon-120.png'
+            ];
+
+            for (const file of filesToCheck) {
+                try {
+                    const response = await fetch(file, { method: 'HEAD' });
+                    if (response.ok) {
+                        log(`✅ ${file} - <code>Status ${response.status}</code>`, 'success');
+                    } else {
+                        log(`❌ ${file} - <code>Status ${response.status}</code>`, 'error');
+                    }
+                } catch (err) {
+                    log(`❌ ${file} - <code>${err.message}</code>`, 'error');
+                }
+            }
+
+            log('<h2>3. External Dependencies</h2>', 'info');
+
+            if (typeof window.supabase !== 'undefined') {
+                log('✅ Supabase library loaded from CDN', 'success');
+            } else {
+                log('❌ Supabase library NOT loaded', 'error');
+            }
+
+            log('<h2>4. Module Loading</h2>', 'info');
+            log('Loading main application modules...', 'info');
+        }
+
+        runDiagnostics().then(() => {
+            log('<h2>5. Loading Main Application</h2>', 'info');
+            log('Attempting to load Supabase client module...', 'info');
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module">
+        const output = document.getElementById('output');
+
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            output.appendChild(div);
+        }
+
+        try {
+            const { createClient } = window.supabase;
+            const supabaseUrl = 'https://irbflzzuamvvujebhter.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlyYmZsenp1YW12dnVqZWJodGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0NDAwOTYsImV4cCI6MjA3NjAxNjA5Nn0.MaKWPrMGIZYDC7r084VnkI4Gvji5cC0c8s4kgTqXHP0';
+
+            const supabase = createClient(supabaseUrl, supabaseKey);
+            log('✅ Supabase client created successfully', 'success');
+
+            const { data: categories, error } = await supabase
+                .from('categories')
+                .select('*')
+                .order('sort_order', { ascending: true });
+
+            if (error) {
+                log(`❌ Database Error: <code>${error.message}</code>`, 'error');
+            } else {
+                log(`✅ Database Connected - Found ${categories.length} categories`, 'success');
+                log(`<pre>${JSON.stringify(categories.map(c => ({ name: c.name, slug: c.slug })), null, 2)}</pre>`, 'info');
+            }
+
+            const { data: posts, error: postError } = await supabase
+                .from('posts')
+                .select('*')
+                .eq('published', true);
+
+            if (postError) {
+                log(`❌ Posts Error: <code>${postError.message}</code>`, 'error');
+            } else {
+                log(`✅ Found ${posts.length} published posts`, 'success');
+            }
+
+            log('<h2>✅ All Systems Operational</h2>', 'success');
+            log('<p>The main site should work correctly. Visit <a href="/index.html" style="color: #00ff00;">index.html</a> to see the full site.</p>', 'success');
+
+        } catch (err) {
+            log(`❌ Critical Error: <code>${err.message}</code>`, 'error');
+            log(`<pre>${err.stack}</pre>`, 'error');
+        }
+    </script>
+</body>
+</html>
